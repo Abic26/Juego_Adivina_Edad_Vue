@@ -12,9 +12,9 @@ var app = new Vue({
     edadIngresada: null,
     participante: '',
     intentos: [],
-    contadorIntentos: 1,
+    contadorIntentos: 0,
     verMensaje: false,
-    mostrarEdad: false,
+    mostrarPista: false,
     mensaje: '',
     datoAleatorio: null
   },
@@ -35,38 +35,41 @@ var app = new Vue({
         console.log('mayor');
         console.log(this.datoAleatorio);
 
-        this.mostrarEdad = true;
+        this.mostrarPista = true;
         this.mensaje = `mayor y te hace falta quitarle: ${edadIngresada - this.datoAleatorio} años`;
       } else if (edadIngresada < this.datoAleatorio) {
         console.log('menor');
         console.log(this.datoAleatorio);
 
-        this.mostrarEdad = true;
+        this.mostrarPista = true;
         this.mensaje = `menor y te hace falta sumarle: ${this.datoAleatorio - edadIngresada} años`;
       } else if (edadIngresada === this.datoAleatorio) {
         console.log('acertó');
-        this.mostrarEdad = true;
+        this.mostrarPista = true;
         this.mensaje = 'Acertaste a la edad';
       }
 
       this.guardarIntentos();
 
       if (this.contadorIntentos === 5 && edadIngresada !== this.datoAleatorio) {
-        this.mostrarEdad = true;
+        this.mostrarPista = true;
         this.mensaje = 'Excediste los intentos';
       }
     },
     guardarIntentos() {
       if(this.participante===''){
-        this.mostrarEdad = true;
+        this.mostrarPista = true;
         this.mensaje = 'Ingrese nombre del participante';
       }
       this.intentos.push({ nombre: this.participante, edadIngresada: this.edadIngresada, intentos: this.contadorIntentos });
       this.contadorIntentos++;
+       
+      this.contadorIntentos===5?this.añosAleatorio():5
 
-      if (this.contadorIntentos === 5) {
-        this.añosAleatorio();
-      }
+      // if (this.contadorIntentos === 5) {
+      //   this.añosAleatorio();
+      // }
+      
     },
     verIntentos() {
       this.verMensaje = !this.verMensaje;
